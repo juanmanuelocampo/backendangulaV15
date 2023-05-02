@@ -85,6 +85,19 @@ namespace BackV15II
             return NoContent();
         }
 
+
+        // POST: api/ValidacionesCliente
+        [HttpPost("validaciones")]        
+        public async Task<ActionResult<IEnumerable<Validacion>>> ValidacionesCliente(Cliente cliente)
+        {
+            List<Validacion> validaciones = new List<Validacion>();            
+            //validaciones.Add(new Validacion { Id = 1, Descripcion = "Validación Requerida1", Tipo = "Requerida" });
+            //validaciones.Add(new Validacion { Id = 2, Descripcion = "Validación Requerida2", Tipo = "Requerida" });
+            //validaciones.Add(new Validacion { Id = 3, Descripcion = "Validación Opcional1", Tipo = "Opcional" });
+            //validaciones.Add(new Validacion { Id = 4, Descripcion = "Validación Opcional2", Tipo = "Opcional" });
+            return validaciones;
+        }
+
         // POST: api/Cliente              
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
@@ -100,6 +113,14 @@ namespace BackV15II
                 {
                     return ValidationProblem("Validaciones requeridas", null, 400, null, null, ModelState);
                 }
+
+                ValidacionesOpcionales(cliente);
+                if (!ModelState.IsValid)
+                {
+                    return ValidationProblem("Validaciones opcionales", null, 400, null, null, ModelState);
+                }
+
+
                 _context.Cliente.Add(cliente);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
@@ -108,9 +129,7 @@ namespace BackV15II
             {
                 //return BadRequest("No se puede completar el registro debido a datos incorrectos o incompletos." + e.Message, StatusCode: 500);
                 return ValidationProblem(e.Message +" - " + e.InnerException);
-            }
-
-            
+            }            
         }
 
         // DELETE: api/Cliente/5
@@ -138,12 +157,30 @@ namespace BackV15II
         {
             //if (1 != 1)
             //{
-            //    ModelState.AddModelError("VC1", "Descripción de la validación 1 de cliente");                
+            //    ModelState.AddModelError("VRC1", "Descripción de la validación requerida 1 de cliente");                
             //}
             //if (2 != 2)
             //{
-            //    ModelState.AddModelError("VC2", "Descripción de la validación 2 de cliente");
+            //    ModelState.AddModelError("VRC2", "Descripción de la validación 2 requerida de cliente");
             //}            
         }
+
+        private void ValidacionesOpcionales(Cliente cliente)
+        {
+            if (cliente.Id >= 0)
+            {
+                ModelState.AddModelError("VOC1", "Existe otro cliente con el mismo nombre.");                
+            }
+            if (cliente.Id >= 0)
+            {
+                ModelState.AddModelError("VOC1", "Existe otro cliente con el mismo CUIT.");
+            }
+            if (cliente.Id >= 0)
+            {
+                ModelState.AddModelError("VOC1", "Existe otro cliente con el mismo número de documento.");
+            }
+        }
+
+
     }
 }
