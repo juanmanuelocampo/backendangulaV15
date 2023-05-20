@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BackV15II.Data;
+using Microsoft.OpenApi.Models;
 
 namespace BackV15II
 {
@@ -28,6 +29,7 @@ namespace BackV15II
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            AddSwagger(services);
 
             services.AddDbContext<BackV15IIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BackV15IIContext")));
@@ -45,6 +47,12 @@ namespace BackV15II
 
             app.UseHttpsRedirection();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Precarga V1");
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -52,6 +60,27 @@ namespace BackV15II
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Foo {groupName}",
+                    Version = groupName,
+                    Description = "Foo API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Foo Company",
+                        Email = string.Empty,
+                        Url = new Uri("https://foo.com/"),
+                    }
+                });
             });
         }
     }

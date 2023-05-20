@@ -262,3 +262,11 @@ C:\Users\Usuario\Desktop\BackV15\BackV15II\obj\Debug\netcoreapp3.1\BackV15II.csp
 C:\Users\Usuario\Desktop\BackV15\BackV15II\obj\Debug\netcoreapp3.1\BackV15II.dll
 C:\Users\Usuario\Desktop\BackV15\BackV15II\obj\Debug\netcoreapp3.1\BackV15II.pdb
 C:\Users\Usuario\Desktop\BackV15\BackV15II\obj\Debug\netcoreapp3.1\BackV15II.genruntimeconfig.cache
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\Dapper.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\MySqlConnector.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Usuario\Desktop\BackV15\BackV15II\obj\Debug\netcoreapp3.1\BackV15II.MvcApplicationPartsAssemblyInfo.cs

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BackV15II.Data;
 using BackV15II.Models;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Diagnostics;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.Data.SqlClient;
+
 
 namespace BackV15II
 {
@@ -25,7 +22,7 @@ namespace BackV15II
         {
             _context = context;
         }
-
+       
         // GET: api/Cliente
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()

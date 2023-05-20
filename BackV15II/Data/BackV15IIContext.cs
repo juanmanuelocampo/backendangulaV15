@@ -17,5 +17,7 @@ namespace BackV15II.Data
         public DbSet<BackV15II.Models.Cliente> Cliente { get; set; }
 
         public DbSet<BackV15II.Models.Localidad> Localidad { get; set; }
+
+        public DbSet<BackV15II.Models.Solicitud> Solicitud { get; set; }
     }
 }
