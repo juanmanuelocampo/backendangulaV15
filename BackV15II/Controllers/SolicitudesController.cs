@@ -11,6 +11,10 @@ using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Common.Util;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace BackV15II
 {
@@ -80,13 +84,14 @@ namespace BackV15II
         // GET: api/Solicitud
         [HttpGet]
         //public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicitud()
-        public ActionResult<IEnumerable<Object>> GetSolicitud()
+        public ActionResult<IEnumerable<Solicitud>> GetSolicitud()
+        //public ActionResult GetSolicitud()
         {
             //return await _context.Solicitud.ToListAsync();
             SqlConnection cnnSQL = new SqlConnection("Data Source=localhost;Initial Catalog=clixerv15;User ID=sa;Password=MihuyaX");
             cnnSQL.Open();
-            var solicitudes = cnnSQL.Query<object>("Select solicitud.* From solicitud left join planes on solicitud.planid = planes.id");
-            return solicitudes.ToList();
+            var solicitudes = cnnSQL.Query<Solicitud>("Select solicitud.* From solicitud left join planes on solicitud.planid = planes.id");           
+            return Ok(solicitudes);
         }
 
         // GET: api/Solicitud/5
@@ -151,9 +156,11 @@ namespace BackV15II
                     try
                     {
                         command.CommandText = $@"Update solicitud Set 
-                                nombre = '{solicitud.Nombre}',
-                                planid = {solicitud.Planid},
-                                prueba = '{solicitud.Prueba}'
+                                nombre = {TxtSQL(solicitud.Nombre)},
+                                planid = {NVal(solicitud.Planid)},
+                                prueba = {TxtSQL(solicitud.Prueba)},
+                                numerodecimal = {NVal(solicitud.Numerodecimal)},
+                                fecha = {FecSQL(solicitud.Fecha)}
                                 Where id = {solicitud.Id}";
 
                         command.ExecuteNonQuery();
@@ -173,6 +180,7 @@ namespace BackV15II
                         try
                         {
                             transaction.Rollback();
+                            return BadRequest(ex.Message);
                         }
                         catch (Exception ex2)
                         {
@@ -181,6 +189,7 @@ namespace BackV15II
                             // a closed connection.
                             Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
                             Console.WriteLine("  Message: {0}", ex2.Message);
+                            return BadRequest();
                         }
                     }
                 }
@@ -292,5 +301,5 @@ namespace BackV15II
                 ModelState.AddModelError("VOC1", "Validación opcional 1.");                
             }
         }
-    }
+    }    
 }
